@@ -1,0 +1,137 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --nvblue: #142850;
+    /*Midnight Navy*/
+    --mtgold: #e5c062;
+    /* --mtgold: #CBB26A; inicial*/
+    /* --mtgold: #ffdc73; */
+    /*Matte Gold*/
+    --bwhite: #FFFFFF;
+    /*Basic White*/
+    --sgrey: 58687E;
+    /*Slate Grey*/
+}
+
+/* Custom sidebar styling */
+.sidebar {
+    color: var(--bwhite);
+}
+
+.sidebar a {
+    color: var(--mtgold);
+    /* Gold accent links */
+    text-decoration: none;
+    display: block;
+    padding: 0.75rem 1rem;
+}
+
+.nav-item a {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem;
+}
+
+.nav-item a span {
+    display: flex;
+    align-items: center;
+}
+
+.nav-item a span svg {
+    margin-right: 0.6rem;
+}
+
+.main {
+    min-height: 90vh;
+}
+
+.app-name {
+    color: var(--mtgold) !important;
+}
+
+.custom-link-hover:hover {
+    color: var(--mtgold) !important;
+}
+
+.bg-gold {
+    background-color: var(--mtgold);
+}
+
+.bg-nvblue {
+    background-color: var(--nvblue);
+}
+
+.text-nvblue {
+    color: var(--nvblue);
+}
+
+.text-gold {
+    color: var(--mtgold);
+}
+
+.text-white {
+    color: var(--bwhite);
+}
+
+.border-blue {
+    border: 1px solid blue;
+}
+
+.border-red {
+    border: 1px solid red;
+}
+
+.border-green {
+    border: 1px solid green;
+}
+
+.add-container button {
+    color: var(--nvblue);
+}
+
+.add-container button:hover {
+    background-color: var(--nvblue);
+    color: var(--mtgold);
+}
+
+.btn-add {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.add-icon {
+    stroke: var(--mtgold);
+}
+
+.task-table thead tr th {
+    background-color: var(--nvblue);
+    color: var(--mtgold);
+}
+
+.task-table tbody tr button:hover {
+    background-color: var(--mtgold);
+}
+
+.table-divider {
+    border-top: 4px solid var(--mtgold);
+}
+
+.add-task-label {
+    font-weight: 700;
+}
+
+@media screen and (min-width:760px) {
+    .sidebar {
+        min-height: 100vh;
+        /* Full viewport height */
+        position: fixed;
+    }
+
+    .main {
+        min-height: 95vh;
+    }
+}
