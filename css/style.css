@@ -53,6 +53,10 @@
     color: var(--mtgold) !important;
 }
 
+.custom-link-active{
+    color: var(--mtgold) !important;
+}
+
 .custom-link-hover:hover {
     color: var(--mtgold) !important;
 }
