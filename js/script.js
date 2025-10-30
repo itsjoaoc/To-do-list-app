@@ -134,7 +134,7 @@ function getOverdueTasks() {
         currentDate.getUTCMonth(),
         currentDate.getUTCDate()
     ));
-
+console.log(allTaskArr)
     let overdueTasksArray = structuredClone(allTaskArr);
     return overdueTasksArray.filter(task => new Date(task.dueDate) < currentDateMidnight && !task.isCompleted);
 }
@@ -144,9 +144,12 @@ function displayOverdueTasksCount() {
     let overdueTasks = getOverdueTasks();
     let spnOverDueTotal = document.getElementById('spnOverDueTotal');
     let totalOverdueTasks = overdueTasks.length;
-
+    
     if (totalOverdueTasks > 0) {
         spnOverDueTotal.innerText = overdueTasks.length;
+    }
+    else{
+        spnOverDueTotal.innerText = '';
     };
 }
 
@@ -177,103 +180,12 @@ function loadTasksFromSessionStorage() {
     }
 }
 
-//Task filter sets witch group of tasks should be displayed
-//day -> today tasks
-//week -> week tasks
-//month -> month tasks
-//all -> all tasks
-//overdue -> overdue tasks
-//Default task filter value
-let taskFilter = 'day';
-
 //load tasks from session storage on page load
 window.onload = function () {
     loadTasksFromSessionStorage();
     renderTaskTable();
     displayOverdueTasksCount();
 };
-
-//select current day tasks
-let liDay = document.getElementById('liDay');
-liDay.addEventListener('click', function () {
-    taskFilter = 'day';
-    renderTaskTable();
-    handleLinkActive(taskFilter);
-});
-
-//select current week tasks
-let liWeek = document.getElementById('liWeek');
-liWeek.addEventListener('click', function () {
-    taskFilter = 'week';
-    renderTaskTable();
-    handleLinkActive(taskFilter);
-});
-
-//select current month tasks
-let liMonth = document.getElementById('liMonth');
-liMonth.addEventListener('click', function () {
-    taskFilter = 'month';
-    renderTaskTable();
-    handleLinkActive(taskFilter);
-});
-
-//select overdue tasks
-let liOverdue = document.getElementById('liOverdue');
-liOverdue.addEventListener('click', function () {
-    displayOverdueTasksCount();
-    taskFilter = 'overdue';
-    renderTaskTable();
-    handleLinkActive(taskFilter);
-});
-
-//function to handle the active link in the sidebar
-function handleLinkActive(taskFilter) {
-
-    //remove the custom-link-active class from all links
-    let navItems = document.querySelectorAll('.nav-item');
-    navItems.forEach(item => {
-        let link = item.querySelector('.nav-link');
-        link.classList.remove('custom-link-active');
-        //add link-light class to all links except the last one (overdue)
-        if (link.id !== 'aOverdue') {
-            link.classList.add('link-light');
-        }
-        else {
-            link.classList.add('link-danger');
-        }
-    });
-
-    let selectedLink = undefined;
-
-    switch (taskFilter) {
-        case 'day':
-            selectedLink = document.getElementById('aDay');
-            break;
-        case 'week':
-            selectedLink = document.getElementById('aWeek');
-            break;
-        case 'month':
-            selectedLink = document.getElementById('aMonth');
-            break;
-        case 'overdue':
-            selectedLink = document.getElementById('aOverdue');
-            break;
-        default:
-            selectedLink = document.getElementById('aDay');
-            break;
-    };
-
-    //add the custom-link-active class to the clicked link
-    selectedLink.classList.add('custom-link-active');
-
-    if (selectedLink.id !== 'aOverdue') {
-        selectedLink.classList.remove('link-light');
-    }
-    else {
-        selectedLink.classList.remove('link-danger');
-    }
-
-}
 
 //set focus on task description input when the modal is opened
 let btnOpenAddTask = document.getElementById('btnOpenAddTask');
@@ -355,28 +267,28 @@ function renderTaskTable() {
     let taskTableBody = document.getElementById('taskTableBody');
     taskTableBody.innerHTML = '';
 
+    //get active link
+    let activeLinkId = document.querySelector('.custom-link-active').id;
+
     //check which interval the user selected
     let selectedTaskArr = [];
-    switch (taskFilter) {
-        case 'day':
+    switch (activeLinkId) {
+        case 'aDay':
             selectedTaskArr = getTodayTasks();
             break;
 
-        case 'week':
+        case 'aWeek':
             selectedTaskArr = getWeekTasks();
             break;
 
-        case 'month':
+        case 'aMonth':
             selectedTaskArr = getMonthTasks();
             break;
 
-        case 'overdue':
+        case 'aOverdue':
             selectedTaskArr = getOverdueTasks();
             break;
 
-        case 'all':
-            selectedTaskArr = getAllTasks();
-            break;
         default:
             selectedTaskArr = getTodayTasks();
             break;
@@ -398,7 +310,7 @@ function renderTaskTable() {
             row.classList.add('table-success');
         }
 
-        if (taskFilter === 'overdue') {
+        if (activeLinkId === 'aOverdue') {
             row.classList.add('table-danger');
         }
 
@@ -463,8 +375,6 @@ let modaDelTask = document.getElementById('delTaskModal');
 modaDelTask.addEventListener('hidden.bs.modal', function () {
     document.getElementById('spDelTaskInfo').InnerTExt = '';
 });
-
-
 
 //build the html for the completed button and the delete button in the task table
 //and add event listeners to them
