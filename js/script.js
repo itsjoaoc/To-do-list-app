@@ -134,7 +134,7 @@ function getOverdueTasks() {
         currentDate.getUTCMonth(),
         currentDate.getUTCDate()
     ));
-console.log(allTaskArr)
+
     let overdueTasksArray = structuredClone(allTaskArr);
     return overdueTasksArray.filter(task => new Date(task.dueDate) < currentDateMidnight && !task.isCompleted);
 }
